@@ -97,12 +97,18 @@ const QueryS = () => {
     setKey(e)
   }
 
+  const doExport=async(e)=>{
+    let path = await store.exportStud()
+    window.open(`${API_SERVER}/${path}`)
+    console.log(path)
+  }
+
   return (
     <div className={s.main}>
       <span className="g-tl">查看学生信息</span>
 
       <div className={s.menu}>
-        <Button type="primary"> 导出名单模板</Button>
+        <Button type="primary" onClick={doExport}> 导出名单模板</Button>
         <Button type="primary"> 导入学分排名</Button>
       </div>
 

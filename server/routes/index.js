@@ -9,6 +9,7 @@ var formidable = require('formidable')
 var router = express.Router()
 var db = require("../db/db")
 
+var exportExcel = require("../utils/excel")
 
 dotenv.config()
 
@@ -51,6 +52,18 @@ const auth =(req, res, next)=> {
   })
 }
 
+
+const config = {
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+}
+
+const HZNU_DOMAIN = `https://uc.hznu.edu.cn:8080`
+const appId       = `MSG73454309`
+const appPassword = `MTJiZDE5M2U4YTI2N2NkN2U4MTQ3ZDYwMDhmOTYwYzA`
+const URL_TOKEN   = `${HZNU_DOMAIN}/msg/getThirdAPIToken?appId=${appId}&appPassword=${appPassword}`
+const URL_MSG     = `${HZNU_DOMAIN}/message/sendMessageApi`
 
 
 /**
@@ -377,10 +390,77 @@ router.post('/guideSave', auth, async (req, res, next) =>{
   res.status(200).json({code: 200, data: r })
 })
 
+router.post('/guideHistory', auth, async (req, res, next) =>{
+  let params = req.body
+  let sql = `CALL PROC_GUIDE_HISTORY(?)`
+  let r = await callP(sql, params, res)
+  res.status(200).json({code: 200, data: r })
+})
+
+router.post('/guideConfirm', auth, async (req, res, next) =>{
+  let params = req.body
+  let sql = `CALL PROC_GUIDE_CONFIRM(?)`
+  let r = await callP(sql, params, res)
+  res.status(200).json({code: 200, data: r })
+})
 
 
 
 
+
+
+router.post('/studExport', async (req, res, next) =>{
+  let params = req.body
+  let sql = `CALL PROC_STUD_LIST(?)`
+  let r = await callP(sql, params, res)
+
+  let title = ['学号','姓名','专业','班级','第1年绩点','第1年排名','第2年绩点','第2年排名','第3年绩点','第3年排名']
+  let key = ['uid','name','major','class']
+  let path = exportExcel(r,title,key)
+
+  res.status(200).json({code: 200, path: path})
+})
+
+
+
+router.post('/studImport', async (req, res, next) =>{
+  // let params = req.body
+  // let sql = `CALL PROC_STUD_LIST(?)`
+  // let r = await callP(sql, params, res)
+
+  
+  res.status(200).json({code: 200, path: path})
+})
+
+
+
+
+router.post('/msg', async (req, res, next) =>{
+  let { msgtitle,msgContent,list } =req.body
+  let receivers = list.map(o=> ({"type":"User", "userId":o}) )
+
+  let r = await axios({url:URL_TOKEN})
+  let {token} = r.data.resultData
+
+  const params = new URLSearchParams()
+  params.append('msgtitle', msgtitle)
+  params.append('msgContent', msgContent)
+  params.append('receivers', JSON.stringify(receivers))
+  params.append('token', token)
+  params.append('msgType', 1)
+  params.append('sendStatus', 1)
+  params.append('sendChannel', 'IntelligenceMode')
+  params.append('sendMode', 'normal')
+  params.append('isReply', 1)
+
+  let s = await axios.post(URL_MSG, params, config )
+
+  if (s.data.rspCode==='000000') {
+    res.status(200).json({code: 200, msg: '消息推送成功！' })
+  }else{
+    res.status(200).json({code: 201, msg: s.rspMsg })
+  }
+})
 
 router.get('/msg', async (req, res, next) =>{
   const URL_TOKEN = 'https://uc.hznu.edu.cn:8080/msg/getThirdAPIToken?appId=MSG73454309&appPassword=MTJiZDE5M2U4YTI2N2NkN2U4MTQ3ZDYwMDhmOTYwYzA'
@@ -389,7 +469,6 @@ router.get('/msg', async (req, res, next) =>{
 
   let r = await axios({url:URL_TOKEN})
   let {token} = r.data.resultData
-
   
   let msgtitle = '测试接口消息'
   let msgContent = '正在测试定向发送 大家好 我是信息工程学院! 收到请回复 test ......'

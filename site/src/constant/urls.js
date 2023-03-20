@@ -19,12 +19,14 @@ export const API_MENT_DETAIL_LOAD   = API_SERVER + '/mentDetailLoad'
 export const API_MARK_LOAD = API_SERVER + '/markLoad'
 export const API_MARK_SAVE = API_SERVER + '/markSave'
 
-
+export const API_STUD_LIST_EXPORT   = API_SERVER + '/studExport'
 export const API_STUD_LIST_LOAD     = API_SERVER + '/studListLoad'
 export const API_STUD_LIST_FOR_MENT = API_SERVER + '/studListForMent'
 
-export const API_GUIDE_SAVE = API_SERVER + '/guideSave'
 
+export const API_GUIDE_HISTORY = API_SERVER + '/guideHistory'
+export const API_GUIDE_SAVE    = API_SERVER + '/guideSave'
+export const API_GUIDE_CONFIRM = API_SERVER + '/guideConfirm'
 
 
 
