@@ -20,6 +20,8 @@ export const API_MARK_LOAD = API_SERVER + '/markLoad'
 export const API_MARK_SAVE = API_SERVER + '/markSave'
 
 export const API_STUD_LIST_EXPORT   = API_SERVER + '/studExport'
+// 导出学生选择导师情况信息
+export const API_STUDANDTECH_LIST_EXPORT = API_SERVER + '/techAndStudExport'
 export const API_STUD_LIST_LOAD     = API_SERVER + '/studListLoad'
 export const API_STUD_LIST_FOR_MENT = API_SERVER + '/studListForMent'
 
@@ -34,7 +36,7 @@ export const API_GUIDE_CONFIRM = API_SERVER + '/guideConfirm'
 
 const SKILL_LIST = ["轮滑","篮球","排球","足球","羽毛球","乒乓球","网球","计算机","音乐","围棋","象棋","跆拳道","跳舞","绘画","书法","游泳","社交","爬山","PS","PR","XD","3dMax","Unity"]
 const CERT_LIST  = ["教师资格证","计算机二级证书","英语四级","英语六级","机动车驾驶证","普通话等级证书","三好学生证书","优秀毕业生证书","优秀学生干部证书","英语中高级口译","托福TOFEL","雅思IELTS","托业TOEIC","GRE/GMAT","日本语JLPT N1","日本语JLPT N2","韩国语能力考试","EI论文","SCI论文","发明专利证书"]
-const AREA_LIST  = ["前端方向","后端方向","人工智能方向","多媒体方向","竞赛方向","研究方向"]
+const AREA_LIST  = ["前端方向","后端方向","人工智能方向","多媒体方向","竞赛方向","遥感地学方向"]
 const AWARD_LIST = ["ACM 一等奖","ACM 二等奖","ACM 三等奖","ICPC 一等奖","ICPC 二等奖","ICPC 三等奖","计算机设计大赛 一等奖","计算机设计大赛 二等奖","计算机设计大赛 三等奖","电子设计竞赛 一等奖","电子设计竞赛 二等奖","电子设计竞赛 三等奖","服务外包 一等奖","服务外包 二等奖","服务外包 三等奖","多媒体 一等奖","多媒体 二等奖","多媒体 三等奖"]
 const SCHE_LIST = ["学习专业课程","研究前端技术","研究后端技术","跟老师做项目","参加竞赛","开展社会实习","找工作","考研","加入社团/组织","在社团/组织中担任领导，锻炼自己","考雅思","担任班干部"]
 
@@ -141,32 +143,122 @@ export const FIELD_DESC = [{
 
 ]
 
+export const EDU_STU_LIST = [
+  [
+    {
+      name: "担任本科学生班主任",
+      list: [
+        { m: "优秀", v: 25 },
+        { m: "良好", v: 20 },
+        { m: "合格", v: 15 },
+        { m: "未担任", v: 0 },
+      ],
+    },
+    {
+      name: "担任兼职辅导员",
+      list: [
+        { m: "优秀", v: 25 },
+        { m: "合格", v: 20 },
+        { m: "未担任", v: 0 },
+      ],
+    },
+    {
+      name: "担任本科学生综合导师",
+      list: [],
+      input: { i: "所带本科生数", v: 2, m: 15 },
+    },
+    {
+      name: "担任研究生导师",
+      list: [],
+      input: { i: "该项分数（本院每生2分，外院每生1分）", v: 1 },
+    },
+    {
+      name: "担任党支部书记、党支部委员",
+      list: [
+        { m: "党支部书记", v: 20 },
+        { m: "党支部委员", v: 10 },
+        { m: "未担任", v: 0 },
+      ],
+    },
+    {
+      name: "育人先进",
+      list: [],
+      input: { i: "输入获得分数（从院级起依次加 5 分）", v: 1 },
+    },
+    {
+      name: "担任党校、团校等培训或思政教育专题报告、沙龙活动等主讲教师",
+      list: [],
+      input: { i: "活动天数", v: 6 },
+    },
+  ],
+  [
+    {
+      name: "指导本科学生发表论文",
+      list: [],
+      input: { i: "该项分数", v: 1 },
+    },
+    {
+      name: "为学生举行各类专业报告会、研讨会、讲座、论坛",
+      list: [],
+      input: { i: "举办天数", v: 6 },
+    },
+    {
+      name: "带领和指导学生参加各类校外学术交流的",
+      list: [],
+      input: { i: "参加天数", v: 6 },
+    },
+  ],
+  [
+    {
+      name: "指导学生完成校级、省级和国家级创新创业项目结题的",
+      list: [],
+      input: {
+        i: "该项分数（每个项目分别计 5 分、10 分、15 分，同一项目只计最高分，不重复计分）",
+        v: 1,
+      },
+    },
+    {
+      name: "担任学生竞赛活动指导教师，指导学校组织的学科竞赛",
+      list: [],
+      input: { i: "该项分数", v: 1, m: 60 },
+    },
+    {
+      name: "指导学生申请专利",
+      list: [],
+      input: { i: "申请专利数", v: 3 },
+    },
+    {
+      name: "指导学生入驻学院创新基地，并经年度考核合格",
+      list: [],
+      input: { i: "入驻项目数", v: 5 },
+    },
+  ],
+  [
+    {
+      name: "担任学生社团指导教师",
+      list: [],
+      input: { i: "合格社团数", v: 10 },
+    },
+    {
+      name: "担任社会实践指导教师",
+      list: [],
+      input: { i: "带队指导活动天数", v: 2, m: 10 },
+    },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    {
+      name: "担任学生非教学活动评审或辅导工作",
+      list: [],
+      input: { i: "评审或辅导工作天数", v: 4 },
+    },
+  ],
+  [
+    {
+      name: "以上考核内容中未明确说明的其他涉及教师课外育人相关工作(如招生宣传、志愿服务、公益活动等)",
+      list: [],
+      input: { i: "参考分数", v: 1 },
+    },
+  ],
+];
 
 
 

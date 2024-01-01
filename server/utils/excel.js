@@ -10,10 +10,10 @@ module.exports = (list,titleList,keyList)=>{
     keyList.forEach(p=> item.push(o[p]))
     data.push(item)
   })
-  let sheetOptions = {'!cols': [{wch: 20}, {wch: 10}, {wch: 20}, {wch: 20}]};
+  let sheetOptions = {'!cols': [{wch: 20}, {wch: 20}, {wch: 20}, {wch: 20}]};
   let buffer = xlsx.build([{name: 'grade', data: data}], {sheetOptions}); 
 
-  let file = `export/studlist_${dayjs().format('YYYYMMDDhhmmss')}.xlsx`
+  let file = `export/${dayjs().format('YYYYMMDDhhmmss')}.xlsx`
   fs.writeFileSync(file, buffer, {'flag':'w'})
 
   return file

@@ -421,6 +421,17 @@ router.post('/studExport', async (req, res, next) =>{
   res.status(200).json({code: 200, path: path})
 })
 
+// 导出导师选择信息excel文件
+router.post("/techAndStudExport", async (req, res,next) => {
+  let params = req.body
+  let sql = `CALL PROC_STUDANDTECH_INFO()`
+  let r = await callP(sql,params,res)
+  console.log(r)
+  let title = ['班级',"姓名","学号","导师名称"]
+  let key = ["class","student_name",'student_uid',"teacher_name"]
+  let path = exportExcel(r,title,key)
+  res.status(200).json({code:200, path:path})
+})
 
 
 router.post('/studImport', async (req, res, next) =>{

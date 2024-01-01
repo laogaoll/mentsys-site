@@ -105,9 +105,22 @@ const QueryT = () => {
     setKey(e)
   }
 
+   // 导出数据按钮
+   const doExport = async(e)=> {
+    let path = await store.exportTechAndStud()
+    window.open(`${API_SERVER}/${path}`)
+    // window.open(`${API_SERVER}/img/tech/20050027.jpg`)
+  }
+  
   return (
     <div className={s.main}>
       <span className="g-tl">查看导师信息</span>
+
+      <div className={s.menu}>
+        <Button type="primary" onClick={doExport}>导出导师选择信息</Button>
+        <Button type="primary">导出导师测评数据</Button>
+      </div>
+
       <div className={s.wrap}>
         <div className={s.list}>
           <div className={s.menu}>
