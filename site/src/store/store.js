@@ -74,6 +74,7 @@ class Store {
     if (r.code === 200) {
       message.info('登录成功！')
       window.token = r.token
+      // 保存用户信息
       this.setUserObj(r.data)
       return true
     } else {
@@ -208,6 +209,24 @@ class Store {
     }
   }
 
+  // 导出导师自评数据excel文件
+  async exportMarkT(params) {
+    const r = await this.post(urls.API_MARK_T_EXPORT,params)
+    if (r.code === 200) {
+      return r.path
+    } else {
+      message.error("加载数据出错")
+    }
+  }
+
+  async exportMark(params) {
+    const r = await this.post(urls.API_MARK_EXPORT,params)
+    if (r.code === 200) {
+      return r.path
+    } else {
+      message.error("加载数据出错")
+    }
+  }
 
 
 

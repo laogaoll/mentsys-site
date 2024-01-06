@@ -15,12 +15,19 @@ export const API_MENT_CLEAR = API_SERVER + '/mentClear'
 export const API_MENT_LIST_LOAD = API_SERVER + '/mentList'
 export const API_MENT_DETAIL_LOAD   = API_SERVER + '/mentDetailLoad'
 
-
+// 学生评价导师
 export const API_MARK_LOAD = API_SERVER + '/markLoad'
 export const API_MARK_SAVE = API_SERVER + '/markSave'
 
+// 导师自评数据保存
+export const API_MARK_T_SAVE = API_SERVER + "/mark_tSave"
+// 导师自评数据导出
+export const API_MARK_T_EXPORT = API_SERVER + "/mentorEvalExport"
+// 学生测评导师数据
+export const API_MARK_EXPORT = API_SERVER + "/stuEvlMenExport"
+
 export const API_STUD_LIST_EXPORT   = API_SERVER + '/studExport'
-// 导出学生选择导师情况信息
+// 导出学生选择导师情况信息excel文件
 export const API_STUDANDTECH_LIST_EXPORT = API_SERVER + '/techAndStudExport'
 export const API_STUD_LIST_LOAD     = API_SERVER + '/studListLoad'
 export const API_STUD_LIST_FOR_MENT = API_SERVER + '/studListForMent'
@@ -36,7 +43,7 @@ export const API_GUIDE_CONFIRM = API_SERVER + '/guideConfirm'
 
 const SKILL_LIST = ["轮滑","篮球","排球","足球","羽毛球","乒乓球","网球","计算机","音乐","围棋","象棋","跆拳道","跳舞","绘画","书法","游泳","社交","爬山","PS","PR","XD","3dMax","Unity"]
 const CERT_LIST  = ["教师资格证","计算机二级证书","英语四级","英语六级","机动车驾驶证","普通话等级证书","三好学生证书","优秀毕业生证书","优秀学生干部证书","英语中高级口译","托福TOFEL","雅思IELTS","托业TOEIC","GRE/GMAT","日本语JLPT N1","日本语JLPT N2","韩国语能力考试","EI论文","SCI论文","发明专利证书"]
-const AREA_LIST  = ["前端方向","后端方向","人工智能方向","多媒体方向","竞赛方向","遥感地学方向"]
+const AREA_LIST  = ["前端方向","后端方向","人工智能方向","多媒体方向","竞赛方向","遥感地学方向","物联网方向","图像处理与机器学习","网络空间安全方向"]
 const AWARD_LIST = ["ACM 一等奖","ACM 二等奖","ACM 三等奖","ICPC 一等奖","ICPC 二等奖","ICPC 三等奖","计算机设计大赛 一等奖","计算机设计大赛 二等奖","计算机设计大赛 三等奖","电子设计竞赛 一等奖","电子设计竞赛 二等奖","电子设计竞赛 三等奖","服务外包 一等奖","服务外包 二等奖","服务外包 三等奖","多媒体 一等奖","多媒体 二等奖","多媒体 三等奖"]
 const SCHE_LIST = ["学习专业课程","研究前端技术","研究后端技术","跟老师做项目","参加竞赛","开展社会实习","找工作","考研","加入社团/组织","在社团/组织中担任领导，锻炼自己","考雅思","担任班干部"]
 
@@ -83,6 +90,8 @@ export const FIELD_OPT = [
       { label: '计算机应用', value: '计算机应用' },
       { label: '计算机教育', value: '计算机教育' },
       { label: '科学与工程计算', value: '科学与工程计算' },
+      { label: '遥感地学', value: '遥感地学' },
+      { label: '图像处理与机器学习', value: '图像处理与机器学习' },
     ],
   },
 ]

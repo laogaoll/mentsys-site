@@ -1,9 +1,9 @@
 let conf = {
-  host: '121.40.124.170',
+  host: '172.31.192.160',
   port: 3306,
   database: 'mentsys',
   user:     'hznu',
-  password: '123456',
+  password: 'hangzhou_2023_liyang_!!!',
   multipleStatements: true,
   secret: 'mentsys',
 };

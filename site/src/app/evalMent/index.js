@@ -11,8 +11,9 @@ import {
   InputNumber,
   Button,
   Radio,
+  message,
 } from "antd";
-import { EDU_STU_LIST } from "@/constant/urls";
+import { EDU_STU_LIST, API_MARK_T_SAVE } from "@/constant/urls";
 import { inject, observer, MobXProviderContext } from "mobx-react";
 
 const EvalMent = () => {
@@ -95,6 +96,25 @@ const EvalMent = () => {
     `实践育人`,
     `其他课外育人`,
   ];
+
+  const saveInfo = async () => {
+    try {
+      let params = {
+        ret: gradearr,
+        mark: grade,
+        uid: store.user.uid
+      }
+      console.log(params)
+      let r = await store.post(API_MARK_T_SAVE, params)
+      if (r.code === 200) {
+      //store.setUser(params.area,params.desc,params.field)
+        message.info('保存信息成功！')
+      }
+    } catch (errorInfo) {
+      console.log('Failed:', errorInfo);
+    }
+  }
+
   return (
     <div className={s.main}>
       <span className="g-tl">导师测评</span>
@@ -197,10 +217,7 @@ const EvalMent = () => {
           <div className={s.mft}>
             <Button
               type="primary"
-              onClick={() => {
-                console.log(form.getFieldsValue());
-                console.log(grade, gradearr);
-              }}
+              onClick={saveInfo}
             >
               保存
             </Button>

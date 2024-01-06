@@ -7,6 +7,8 @@
 /server/node_modules
 /server/build
 /server/key
+/server/img
+/server/export/*
 
 # data
 /data

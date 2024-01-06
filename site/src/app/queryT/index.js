@@ -84,7 +84,7 @@ const QueryT = () => {
     let params = { uid: dataPage[i].uid}
     let r = await store.mentDetailLoad(params)
     let s = await store.studListForMent(params)
-
+    console.log(s)
     setSel(i)
     setProjh(r.projh)
     setProjr(r.projr)
@@ -105,20 +105,24 @@ const QueryT = () => {
     setKey(e)
   }
 
-   // 导出数据按钮
+   // 导出导师选择数据按钮
    const doExport = async(e)=> {
     let path = await store.exportTechAndStud()
     window.open(`${API_SERVER}/${path}`)
     // window.open(`${API_SERVER}/img/tech/20050027.jpg`)
   }
-  
+  // 导出导师自评数据按钮
+  const markExport = async(e) => {
+    let path = await store.exportMarkT()
+    window.open(`${API_SERVER}/${path}`)
+  }
   return (
     <div className={s.main}>
       <span className="g-tl">查看导师信息</span>
 
       <div className={s.menu}>
         <Button type="primary" onClick={doExport}>导出导师选择信息</Button>
-        <Button type="primary">导出导师测评数据</Button>
+        <Button type="primary" onClick={markExport}>导出导师自评数据</Button>
       </div>
 
       <div className={s.wrap}>
@@ -150,9 +154,9 @@ const QueryT = () => {
           <br/>
 
           <section className={s.studlist}>
-            {listStud.length>0 && <div className={s.sect}>指导学生</div>}
+            {listStud?.data?.length>0 && <div className={s.sect}>指导学生</div>}
 
-            {listStud.map((item,i)=>
+            {listStud?.data?.map((item,i)=>
               <div key={i} className={classnames(s.stud,{sel:sel===i}) } >
                 {/*<img src={person} />*/}
                 <img src={`${API_SERVER}/img/stud/${item.uid}.jpg`} />
